@@ -14,7 +14,7 @@ cur.execute('''
             )
 
 users = []
-print('Заполняем таблицу 10-ю записями...')
+print('Заполняем таблицу 10-ю записями <for i in range(1, 11):>...')
 for i in range(1, 11):
     username = f'User{i}'
     email = f'example{i}@gmail.com'
@@ -25,14 +25,14 @@ for i in range(1, 11):
     INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)
     ''', (username, email, age, balance))
 
-print('Обновлям баланс у каждого второго юзера ...')
+print('Обновляем баланс у каждого второго юзера <WHERE id%2 = 1;>...')
 cur.execute('''
     UPDATE Users
     SET Balance = 500
     WHERE id%2 = 1;
 ''')
 
-print('Удаляем каждую 3-ю запись в таблице начиная с 1-й...')
+print('Удаляем каждую 3-ю запись <WHERE id%3=1;> в таблице начиная с 1-й...')
 cur.execute('''
     DELETE FROM Users
     WHERE id%3=1;
@@ -47,5 +47,11 @@ WHERE age !=60;
 users=cur.fetchall()
 for user in users:
     print(f"Имя: {user[0]} | Почта: {user[1]} | Возраст: {user[2]} | Баланс: {user[3]}")
+
+# очистка базы для тестов
+# cur.execute('''
+#     DELETE FROM Users;
+# ''')
+
 con.commit()
 con.close()
