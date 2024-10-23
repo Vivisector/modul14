@@ -2,6 +2,10 @@ import sqlite3 as sq
 
 con = sq.connect('not_telegram.db')
 cur = con.cursor()
+
+# пришлось дропнуть для сброса primary-счетчика
+cur.execute('DROP TABLE IF EXISTS Users;')
+
 cur.execute('''
     CREATE TABLE IF NOT EXISTS Users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,7 +52,7 @@ users=cur.fetchall()
 for user in users:
     print(f"Имя: {user[0]} | Почта: {user[1]} | Возраст: {user[2]} | Баланс: {user[3]}")
 
-# очистка базы для тестов
+#очистка базы для тестов
 # cur.execute('''
 #     DELETE FROM Users;
 # ''')
