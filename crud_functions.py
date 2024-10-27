@@ -1,5 +1,6 @@
 import sqlite3
 
+
 # Функция для инициализации базы данных
 def initiate_db():
     # Подключаемся к базе данных (если она не существует, то создастся новая)
@@ -17,7 +18,32 @@ def initiate_db():
                         price INTEGER NOT NULL
                     )''')
     conn.commit()
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS Users (
+                        id INTEGER PRIMARY KEY,
+                        username TEXT NOT NULL,
+                        email TEXT NOT NULL,
+                        age INTEGER NOT NULL,
+                        balance INTEGER NOT NULL
+                    )''')
+    conn.commit()
+
+    # conn.close()
+
+
+# функция добавления пользователя в базу
+def add_user(username, email, age):
+    conn = sqlite3.connect('products.db')
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Users WHERE username=?", (username,))
+    if cur.fetchone() is None:
+        cur.execute(f'''
+        INSERT INTO Users (username, email, age, balance)
+        VALUES(?,?,?,?)
+''', (username, email, age, 1000))  # Вставляем баланс как 1000)
+    conn.commit()
     conn.close()
+
 
 # Функция для получения всех продуктов
 def get_all_products():
@@ -30,6 +56,7 @@ def get_all_products():
 
     conn.close()
     return products
+
 
 # Пример добавления продуктов (необходимо выполнить перед запуском бота)
 def populate_db():
@@ -51,6 +78,7 @@ def populate_db():
     cursor.executemany('INSERT INTO Products (title, description, price) VALUES (?, ?, ?)', products)
     conn.commit()
     conn.close()
+
 
 # Вызвать эту функцию один раз для заполнения базы данных
 if __name__ == '__main__':
