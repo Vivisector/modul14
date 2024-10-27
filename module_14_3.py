@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
-bot = Bot(token='8116457190:AAH6z1ebWXcoD4s-zXk1Xk0YWVNPMKT52Io')
+bot = Bot(token='TOKEN')
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
